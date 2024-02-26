@@ -6,8 +6,8 @@ def count_missing_vals(df):
     """
     This function prints number of missing values for each column
     in pandas dataframe, if missing values are > 0.
-    :param df:
-    :return:
+    :param df: pandas data frame.
+    :return: None.
     """
 
     nulls_vec = df.count()
@@ -23,10 +23,10 @@ def load_sql_table(df, db_path, table_name):
     This function takes a pandas data frame, table_name string
     and filepath for the database, and saves the df as a table in the
     SQL database.
-    :param df:
-    :param db_path:
-    :param table_name:
-    :return:
+    :param df: pandas data frame.
+    :param db_path: database filepath.
+    :param table_name: table name.
+    :return: None.
     """
     conn = create_engine('sqlite:///' + db_path)
     df.to_sql(table_name, con=conn, index=False, if_exists='replace')
@@ -36,10 +36,10 @@ def extract_transform_load(articles_path, user_item_path, db_path):
     """
     This function reads and cleans the two initial csv files.
     It also loads the cleaned data frames as tables, in a SQL database.
-    :param articles_path:
-    :param user_item_path:
-    :param db_path:
-    :return:
+    :param articles_path: articles csv filepath
+    :param user_item_path: user-item interactions csv filepath.
+    :param db_path: database filepath.
+    :return: None.
     """
     df_articles = pd.read_csv(articles_path)
     df_content = pd.read_csv(user_item_path)
@@ -54,6 +54,10 @@ def extract_transform_load(articles_path, user_item_path, db_path):
 
     # Remove any rows that have the same article_id - only keep the first
     df_content.drop_duplicates(subset=['article_id'], inplace=True)
+
+    # Transform article_id to string
+    df_articles['article_id'] = df_articles['article_id'].apply(str)
+    df_content['article_id'] = df_content['article_id'].apply(str)
 
     # Load dfs to db
     load_sql_table(df_articles, db_path, 'articles_table')
