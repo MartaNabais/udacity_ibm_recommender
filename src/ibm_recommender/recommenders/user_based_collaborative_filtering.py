@@ -56,6 +56,7 @@ def get_article_names(article_ids, df) -> list[str]:
 
 def get_user_articles(user_id, user_item, df) -> tuple[list[str], list[str]]:
     """
+    # TODO: finish function docstring
     This function takes a list of user ids, a user-item interaction pandas data frame
     encoded as 0-1, and a user-item interaction pandas data frame with
     :param user_id:
@@ -72,6 +73,7 @@ def get_user_articles(user_id, user_item, df) -> tuple[list[str], list[str]]:
 
 def user_user_recs(user_id, m=10) -> list[str]:
     """
+    # TODO: finish function docstring
     This function loops through the users based on closeness to the input user id
     For each user it finds the articles the user hasn't seen before and provides
     them as recommendations (recs). Does this until m recommendations are found.
