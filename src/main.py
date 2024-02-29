@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 import argparse
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 def main():
