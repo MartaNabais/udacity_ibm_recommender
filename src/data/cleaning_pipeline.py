@@ -2,7 +2,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 
-def count_missing_vals(df) -> None:
+def count_missing_vals(df: pd.DataFrame()) -> None:
     """
     This function prints number of missing values for each column
     in pandas dataframe, if missing values are > 0.
@@ -18,7 +18,7 @@ def count_missing_vals(df) -> None:
             print('There are {} missing values in {}.'.format(nulls, col))
 
 
-def load_sql_table(df, db_path, table_name) -> None:
+def load_sql_table(df: pd.DataFrame(), db_path: str, table_name: str) -> None:
     """
     This function takes a pandas data frame, table_name string
     and filepath for the database, and saves the df as a table in the
@@ -32,8 +32,8 @@ def load_sql_table(df, db_path, table_name) -> None:
     df.to_sql(table_name, con=conn, index=False, if_exists='replace')
 
 
-def extract_transform_load(user_item_path, articles_path, db_path,
-                           table_name_user_item, table_name_content) -> None:
+def extract_transform_load(user_item_path: str, articles_path: str, db_path: str,
+                           table_name_user_item: str, table_name_content: str) -> None:
     """
     This function reads and cleans the two initial csv files.
     It also loads the cleaned data frames as tables, in a SQL database.

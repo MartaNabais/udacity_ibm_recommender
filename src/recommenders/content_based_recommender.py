@@ -1,7 +1,8 @@
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-def intersect_articles(df, df_content) -> pd.DataFrame():
+
+def intersect_articles(df: pd.DataFrame, df_content: pd.DataFrame) -> pd.DataFrame:
     """
     This function takes the user-item interaction and article-content data frames
     and checks which article ids in the former are not present in the latter.
@@ -22,12 +23,12 @@ def intersect_articles(df, df_content) -> pd.DataFrame():
     return df_merged
 
 
-def tfidf_vectorizer(articles_df) -> pd.DataFrame():
+def tfidf_vectorizer(articles_df: pd.DataFrame) -> pd.DataFrame:
     """
     This function takes a data frame with article titles and article ids as input.
     It performs TF-IDF vectorization of the article title contents.
-    :param articles_df:
-    :return: a pandas data frame with a TF-IDF array (with words as columns and article ids as rows).
+    :param articles_df: data frame with article titles and article ids as input.
+    :return: a data frame with a TF-IDF array (with words as columns and article ids as rows).
     """
     # Initiated vectorizer object
     vectorizer = TfidfVectorizer(stop_words='english',

@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 
 
-def read_db(db_filepath, table_name):
+def read_db(db_filepath: str, table_name: str) -> pd.DataFrame:
     """
     This function reads all columns in the table
     given by the table name and database given by the db_filepath.

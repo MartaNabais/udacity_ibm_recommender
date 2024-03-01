@@ -1,22 +1,6 @@
 import pandas as pd
 
 
-def create_user_item_matrix(df) -> pd.DataFrame:
-    """
-    This function returns a pandas data frame with user ids as rows
-    and article ids as columns.
-    A value of 0 indicates the user has not interacted with the article.
-    A value of 1 indicates the user has interacted with the article.
-    :param df: pandas data frame with user-article interactions.
-    :return: pandas data frame with 0-1 encoded user-article interactions.
-    """
-    df_copy = df.copy()
-    df_copy.loc[:, 'values'] = 1
-    user_item = pd.pivot_table(df_copy, values='values', columns='article_id',
-                               index='user_id', fill_value=0, dropna=False)
-    return user_item
-
-
 def get_article_names(article_ids, df) -> list[str]:
     """
     This function takes a list of article_ids and a pandas dataframe
