@@ -1,5 +1,3 @@
-from typing import List
-
 import pandas as pd
 
 
@@ -83,7 +81,7 @@ def get_top_sorted_users(user_id, user_item) -> pd.DataFrame:
     return neighbors_df
 
 
-def user_user_recs(user_id, df, user_item, m=10) -> tuple[list[str], list[str]]:
+def user_user_recs(user_id, df, user_item, k=10) -> tuple[list[str], list[str]]:
     """
     This function takes a user id and outputs the number of recommendations
     required by m, taking into account the similarity to other users and
@@ -102,10 +100,10 @@ def user_user_recs(user_id, df, user_item, m=10) -> tuple[list[str], list[str]]:
         seen_by_other_user = set(get_user_articles(other_user_id, df=df, user_item=user_item)[0])
         not_seen_article_id = list(seen_by_other_user.difference(seen_by_user))
         recs = list(set(recs + not_seen_article_id))  # to make sure duplicates are removed
-        if len(recs) >= m:
+        if len(recs) >= k:
             break
 
-    recs = recs[:m]
+    recs = recs[:k]
     rec_names = get_article_names(recs, df=df)
 
     return recs, rec_names
