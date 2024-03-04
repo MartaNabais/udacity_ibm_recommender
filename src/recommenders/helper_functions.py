@@ -14,7 +14,7 @@ def compute_similarity_df(df: pd.DataFrame) -> pd.DataFrame:
     return similarity_df
 
 
-def content_rec(article_id: str, similarity_df: pd.DataFrame,
+def content_rec(article_id: list, similarity_df: pd.DataFrame,
                 df: pd.DataFrame, k=10) -> list:
     """
     This function takes an article id, a similarity matrix, a data frame containing article ids and titles,
@@ -26,8 +26,8 @@ def content_rec(article_id: str, similarity_df: pd.DataFrame,
     :param k: number of required recommendations (int)
     :return: a list of article titles with similar content to the input article id.
     """
-
-    similar_articles = list(similarity_df.loc[:, article_id].drop(article_id).sort_values(ascending=False)[:k].index)
+    similar_articles = list(similarity_df.loc[:, article_id].drop(article_id).sort_values(by=article_id,
+                                                                                          ascending=False)[:k].index)
     # To remove potential duplicate article ids, will use set below
     titles = list(set(df[df['article_id'].isin(similar_articles)].doc_full_name))
     titles = list(map(lambda x: x.title(), titles))
@@ -35,11 +35,11 @@ def content_rec(article_id: str, similarity_df: pd.DataFrame,
     return titles
 
 
-def email_mapper(df: pd.DataFrame) -> list:
+def email_mapper(df: pd.DataFrame) -> pd.DataFrame:
     """
     This function maps the user email to a user_id column and removes the encoded email column.
     :param df: data frame with user emails.
-    :return: list of mapped user_ids.
+    :return: updated data frame with mapped user_ids from emails.
     """
     coded_dict = dict()
     cter = 1
@@ -52,7 +52,10 @@ def email_mapper(df: pd.DataFrame) -> list:
 
         email_encoded.append(coded_dict[val])
 
-    return email_encoded
+    del df['email']
+    df.loc[:, 'user_id'] = email_encoded
+
+    return df
 
 
 def create_user_item_matrix(df: pd.DataFrame) -> pd.DataFrame:
@@ -65,9 +68,6 @@ def create_user_item_matrix(df: pd.DataFrame) -> pd.DataFrame:
     :return: pandas data frame with 0-1 encoded user-article interactions.
     """
     df_copy = df.copy()
-    email_encoded = email_mapper(df=df_copy)
-    del df_copy['email']
-    df_copy['user_id'] = email_encoded
     df_copy.loc[:, 'values'] = 1
     user_item = pd.pivot_table(df_copy, values='values', columns='article_id', index='user_id', fill_value=0,
                                dropna=False)

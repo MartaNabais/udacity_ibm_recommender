@@ -74,7 +74,7 @@ def user_user_recs(user_id, df, user_item, k=10) -> tuple[list[str], list[str]]:
     :param user_id: user id (int)
     :param df: user-item interaction data frame (wide-format)
     :param user_item: user-item interaction data frame (long-format; items as columns)
-    :param m: number of recommendations required (int)
+    :param k: number of recommendations required (int)
     :return: tuple with list of recommended article ids, and list of recommended article titles
     """
     similar_users = get_top_sorted_users(user_id, user_item=user_item)
