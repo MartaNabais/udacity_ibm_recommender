@@ -20,7 +20,19 @@ effectively expanding the user's scope based on shared properties.
 In this project, I have analyzed the interactions that users have with articles on the IBM Watson Studio platform, and make 
 recommendations to them about new articles that they may like.
 
-## Technical details
+The project is contained within `Recommendations_with_IBM.ipynb
+`
 
-## Acknowledgements
-## License
+## Notebook Contents
+1. Exploratory Data Analysis
+2. Rank Based Recommendations
+3. User-User Based Collaborative Filtering
+4. Matrix Factorization
+5. Conclusions
+
+## Files Description
++ `Recommendations_with_IBM.ipynb`: Executed Jupyter Notebook containing the different recommender systems.
++ `data/articles_community.csv`: csv file containing article contents (e.g., full title, description).
++ `data/user-item-interactions.csv`: csv file containing user-article interactions.
+
+
